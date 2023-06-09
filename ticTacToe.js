@@ -5,7 +5,7 @@ const inputPlayer = {
         input: {
             description: `It's your turn!`,
             pattern: /^[X]$/i,
-            message: `You are "X"`
+            message: `Type a valid number`
         }
     }
 }
@@ -17,7 +17,8 @@ const printMatrix = () => {
     }    
 }
 
-const matrix = ["0", "|", "2", "|", "4", "\n", "", " _", " _", "\n", "10", "|", "12", "|", "14", "\n", "", " _", " _", "\n", "20", "|", "22", "|", "24"];
+const matrix = ["0", "|", "1", "|", "2", "\n", "", " _", " _", "\n", "3", "|", "4", "|", "5", "\n", "", " _", " _", "\n", "6", "|", "7", "|", "8"];
+const board = [[1, 0, 0], [1, 0, 0], [0, 0, 0]]
 
 const checkWinner = () => {
     if(matrix[0] === matrix[2] && matrix[2] === matrix[4] ||
@@ -30,36 +31,73 @@ const checkWinner = () => {
     }
 }
 
-const dontLetWin = () => {
-    if(matrix[0] === "X" && matrix[2] === "X" && matrix[4] === "4"){
-        matrix[4] = "O";
-    }else if(matrix[10] === "X" && matrix[12] === "X" && matrix[14] === "14"){
-        matrix[14] = "O";
-    }else if(matrix[20] === "X" && matrix[22] === "X" && matrix[24] === "24"){
-        matrix[24] = "O";
-    }else if(matrix[0] === "X" && matrix[12] === "X" && matrix[24] === "24"){
-        matrix[24] = "O";
-    }else if(matrix[20] === "X" && matrix[12] === "X" && matrix[4] === "4"){
-        matrix[4] = "O";
+const computerTurn = () => {
+    if(board[0][0] + board[0][1] + board[0][2] == 2){
+        board[0][indexOf(0)] = -1;
+
+    }else if(board[1][0] + board[1][1] + board[1][2] == 2){
+        board[1][indexOf(0)] = -1;
+
+    }else if(board[2][0] + board[2][1] + board[2][2] == 2){
+        board[2][indexOf(0)] = -1;
+
+    }else if(board[0][0] + board[1][0] + board[2][0] == 2){
+        if(board[0][0] == 0){
+            board[0][0] = -1;
+
+        }else if(board[1][0] == 0){
+            board[1][0] = -1;
+
+        }else if (board[2][0] == 0){
+            board[2][0] = -1;
+
+        }
+
+    }else if(board[0][1] + board[1][1] + board[2][1] == 2){
+        if(board[0][1] == 0){
+            board[0][1] = -1;
+
+        }else if(board[1][1] == 0){
+            board[1][1] = -1;
+
+        }else if (board[2][1] == 0){
+            board[2][1] = -1;
+
+        }
+
+    }else if(board[0][2] + board[1][2] + board[2][2] == 2){
+        if(board[0][2] == 0){
+            board[0][2] = -1;
+
+        }else if(board[1][2] == 0){
+            board[1][2] = -1;
+
+        }else if (board[0][0] == 0){
+            board[2][2] = -1;
+
+        }
     }     
 }
 
-const playerTurn = () => {
-    //console.log(`Do you want to play again? Y/N`);    
-    
-    prompt.get(inputPlayer, function (err, result) {
-        if(result.input.toUpperCase() == "N") {
+const valSpot = (input) => {
+    if(board[input] !== 0 || board[input] !== O) {
+        console.log("This spot is already filled, choose another one!");
+        inputPlayer();
 
-            console.log("\nGAME OVER \n".bold, results);
-            return;
-        }
-        playGame();
-        
+    }else {
+        board[input] =  1;
+
+    }
+}
+
+const playerTurn = () => {       
+    prompt.get(inputPlayer, function (err, result) {        
+        valSpot(result.input);
+
     })
 }
 
-printMatrix();
+computerTurn()
 checkWinner();
-dontLetWin();
-console.log("\n\n");
-printMatrix();
+console.log(board);
+
