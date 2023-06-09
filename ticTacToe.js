@@ -18,7 +18,7 @@ const printMatrix = () => {
 }
 
 const matrix = ["0", "|", "1", "|", "2", "\n", "", " _", " _", "\n", "3", "|", "4", "|", "5", "\n", "", " _", " _", "\n", "6", "|", "7", "|", "8"];
-const board = [[1, -1, 1], [1, 0, 0], [-1, -1, 0]];
+const board = [[1, -1, 1], [1, 1, 1], [-1, -1, 0]];
 const possibleIdx = [[],[],[]];
 
 const possibleChoices = () => {
@@ -48,13 +48,23 @@ const computerRandomArrElem = (computerRandomArr) => {
     
 
 const checkWinner = () => {
-    if(matrix[0] === matrix[2] && matrix[2] === matrix[4] ||
-    matrix[10] === matrix[12] && matrix[12] === matrix[14] ||
-    matrix[20] === matrix[22] && matrix[22] === matrix[23] ||
-    matrix[0] === matrix[12] && matrix[12] === matrix[23] ||
-    matrix[20] === matrix[12] && matrix[12] === matrix[4]){
-        
-    console.log("WINNER!!");
+    if(board[0][0] + board[0][1] + board[0][2] == 3 || board[0][0] + board[0][1] + board[0][2] == -3){
+        console.log("THERE IS A WINNER");
+
+    }else if(board[1][0] + board[1][1] + board[1][2] == 3 || board[1][0] + board[1][1] + board[1][2] == -3){
+        console.log("THERE IS A WINNER");
+
+    }else if(board[2][0] + board[2][1] + board[2][2] == 3 || board[2][0] + board[2][1] + board[2][2] == -3){
+        console.log("THERE IS A WINNER");
+
+    }else if(board[0][0] + board[1][0] + board[2][0] == 3 || board[0][0] + board[1][0] + board[2][0] == -3){
+        console.log("THERE IS A WINNER");
+
+    }else if(board[0][1] + board[1][1] + board[2][1] == 3 || board[0][1] + board[1][1] + board[2][1] == -3){
+        console.log("THERE IS A WINNER");
+
+    }else if(board[0][2] + board[1][2] + board[2][2] == 3 || board[0][2] + board[1][2] + board[2][2] == -3){
+        console.log("THERE IS A WINNER");
     }
 }
 
@@ -105,8 +115,7 @@ const computerTurn = () => {
         }
     } else {
         const arr = computerRandomArr();
-        const elem = computerRandomArrElem(arr);
-        console.log(arr,elem);
+        const elem = computerRandomArrElem(arr);        
         board[arr][elem] = -1;
     }    
 }
@@ -131,8 +140,7 @@ const playerTurn = () => {
 
 possibleChoices()
 console.log(board, "board");
-computerTurn()
-console.log(possibleIdx, "idx")
-console.log(board, "board");
+computerTurn();
+checkWinner();
 
 
