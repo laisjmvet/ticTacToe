@@ -11,12 +11,14 @@ let gameOver = false;
 
 //to update the matrix elements, print the matrix and check if there is a winner at the same time
 const updatePrintCheck = () => {
+
     updateMatrixElems(); 
     printMatrix();
     checkWinner(board);
 }
 //check if the game is a draw
 let gameDraw = () => {
+
     const spotAvailable = matrixElems.some(elem => typeof elem === "number");
 
     if(!spotAvailable) {
@@ -24,9 +26,10 @@ let gameDraw = () => {
         gameOver = true;
 
     }
-};
+}
 //prints the matrix for the user
 const printMatrix = () => {    
+
     let a=matrixElems[0];
     let b=matrixElems[1];
     let c=matrixElems[2];
@@ -61,25 +64,33 @@ const possibleChoices = () => {
             }        
         }
     }
-    console.log(possibleIdx);
+    
     return false;
 }
 //pick a random array from possibleIdx
 const computerRandomArr = () => {
-    const randomArr = Math.floor(Math.random() * possibleIdx.length);    
+
+    const idxAvailable = [];
+
+    for(const arr of possibleIdx) {
+        if(arr.length > 0) {
+           idxAvailable.push(possibleIdx.indexOf(arr));
+        }
+    }
+    const randomArr = Math.floor(Math.random() * idxAvailable.length);       
     
-    return possibleIdx.indexOf(possibleIdx[randomArr]);   
-      
+    return idxAvailable[randomArr];         
 }
 //pick a random element from the random array
-const computerRandomArrElem = (computerRandomArr) => {    
+const computerRandomArrElem = (computerRandomArr) => { 
+
     const randomElemArr = Math.floor(Math.random() * possibleIdx[computerRandomArr].length);
     
     return possibleIdx[computerRandomArr][randomElemArr];
-
 }    
 //checks if there is a winner or a draw
 const checkWinner = (board) => {
+    
     if(board[0][0] + board[0][1] + board[0][2] == 3){
         console.log(colors.green("YOU WIN!"));
         gameOver = true;
@@ -165,6 +176,7 @@ const checkWinner = (board) => {
 }
 //updates matrix elements with X or O
 const updateMatrixElems = () => {
+
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++) {    
                     
@@ -337,7 +349,7 @@ const playerTurn = () => {
 
     let regex = /^[0-8]$/
     let input = prompt(`Your turn! Choose a number or CTRL + C to quit: `);          
-
+    //wasn't working without "test", i need to figure out why"
     if(!regex.test(input.trim())) {
         console.log(colors.red(`Type a valid number`));
         playerTurn();
