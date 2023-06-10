@@ -43,6 +43,7 @@ const printMatrix = () => {
 const possibleChoices = () => {
 
     const board2 = [...board];
+    possibleIdx = [[],[],[]];
 
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++){
@@ -60,6 +61,7 @@ const possibleChoices = () => {
             }        
         }
     }
+    console.log(possibleIdx);
     return false;
 }
 //pick a random array from possibleIdx
