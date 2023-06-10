@@ -3,8 +3,14 @@ const prompt = require('prompt-sync')({sigint: true})
 
 const matrixNums = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-const possibleIdx = [[],[],[]];
+let possibleIdx = [[],[],[]];
 let gameOver = false;
+
+const updatePrintCheck = () => {
+    updateMatrixNums(); 
+    printMatrix();
+    checkWinner(board);
+}
 
 let gameDraw = () => {
     const spotAvailable = matrixNums.some(elem => typeof elem === "number");
@@ -31,13 +37,26 @@ const printMatrix = () => {
 }
 
 const possibleChoices = () => {
+
+    const board2 = [...board];
+
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++){
-            if(board[i][j] === 0){
+
+            if(board[i][j] === 0){        
+                board2[i][j] = -1;
+
+                if(checkWinner(board2) === "computerWins"){
+                    board[i][j] = -1;
+
+                    return true;
+                }
+                board2[i][j] = 0;
                 possibleIdx[i].push(j);
             }        
         }
-    }    
+    }
+    return false;
 }
 
 const computerRandomArr = () => {
@@ -54,38 +73,86 @@ const computerRandomArrElem = (computerRandomArr) => {
 
 }    
 
-const checkWinner = () => {
-    if(board[0][0] + board[0][1] + board[0][2] == 3 || board[0][0] + board[0][1] + board[0][2] == -3){
-        console.log("THERE IS A WINNER");
+const checkWinner = (board) => {
+    if(board[0][0] + board[0][1] + board[0][2] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[1][0] + board[1][1] + board[1][2] == 3 || board[1][0] + board[1][1] + board[1][2] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[1][0] + board[1][1] + board[1][2] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[2][0] + board[2][1] + board[2][2] == 3 || board[2][0] + board[2][1] + board[2][2] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[2][0] + board[2][1] + board[2][2] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[0][0] + board[1][0] + board[2][0] == 3 || board[0][0] + board[1][0] + board[2][0] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[0][0] + board[1][0] + board[2][0] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[0][1] + board[1][1] + board[2][1] == 3 || board[0][1] + board[1][1] + board[2][1] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[0][1] + board[1][1] + board[2][1] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[0][2] + board[1][2] + board[2][2] == 3 || board[0][2] + board[1][2] + board[2][2] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[0][2] + board[1][2] + board[2][2] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[0][0] + board[1][1] + board[2][2] == 3 || board[0][1] + board[1][1] + board[2][2] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[0][0] + board[1][1] + board[2][2] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
 
-    }else if(board[0][2] + board[1][1] + board[2][0] == 3 || board[0][2] + board[1][2] + board[2][2] == -3){
-        console.log("THERE IS A WINNER");
+    }else if(board[0][2] + board[1][1] + board[2][0] == 3){
+        console.log("YOU WIN!");
         gameOver = true;
+        return "playerWins";
+
+    } else if(board[0][0] + board[0][1] + board[0][2] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
+
+    }else if(board[1][0] + board[1][1] + board[1][2] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
+
+    }else if(board[2][0] + board[2][1] + board[2][2] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
+
+    }else if(board[0][0] + board[1][0] + board[2][0] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
+
+    }else if(board[0][1] + board[1][1] + board[2][1] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
+
+    }else if(board[0][2] + board[1][2] + board[2][2] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";        
+
+    }else if(board[0][1] + board[1][1] + board[2][2] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
+
+    }else if(board[0][2] + board[1][1] + board[2][0] == -3){
+        console.log("LOSER!");
+        gameOver = true;
+        return "computerWins";
     }    
     
     gameDraw();
@@ -123,15 +190,21 @@ const updateMatrixNums = () => {
     }
 }
 
-const computerTurn = () => {
+const computerTurn = () => {    
 
-    const updatePrintCheck = () => {
-        updateMatrixNums(); 
-        printMatrix();
-        checkWinner();
+    if(gameOver) {
+        return;
     }
 
-    console.log("COMPUTER TURN")
+    console.log("COMPUTER TURN!\n");
+    
+    // Try win the game
+    if(possibleChoices()) {
+         updatePrintCheck();
+         return;
+    }
+
+    // Try not lose the game
     if(board[0][0] + board[0][1] + board[0][2] == -2 || board[0][0] + board[0][1] + board[0][2] == 2){
         board[0][board[0].indexOf(0)] = -1;
 
@@ -256,76 +329,55 @@ const computerTurn = () => {
 const playerTurn = () => {
 
     let regex = /[0-8]/
-    let input = prompt(`Your turn! Choose a number or type 'exit' to quit.\n`);          
+    let input = prompt(`Your turn! Choose a number or CTRL + C to quit: `);          
 
     if(!regex.test(input.trim())) {
         console.log(`Type a valid number`);
         playerTurn();
 
-    }else if(input === 'exit') {
-        return;
-    
     }else if(matrixNums[input] === "X" || matrixNums[input] === "O") {
         console.log("This spot is already filled, choose another one!");
         playerTurn();
         
 
     }else {
-        console.log("else playerTurn")
+
         switch(Number(input)) {
             case 0: 
                 board[0][0] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 1: 
                 board[0][1] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 2: 
                 board[0][2] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 3: 
                 board[1][0] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 4: 
                 board[1][1] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 5: 
                 board[1][2] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 6: 
                 board[2][0] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 7: 
                 board[2][1] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
             case 8: 
                 board[2][2] = 1;
-                updateMatrixNums();        
-                printMatrix();
-                checkWinner();
+                updatePrintCheck();
                 break;
         }        
 
@@ -341,14 +393,6 @@ const playGame = () => {
             
     }
 }
-
-
-// possibleChoices();
-// computerTurn();
-// console.log(board, "board");
-// updateBoard();
-// printMatrix();
-// checkWinner();
 playGame();
 
 
