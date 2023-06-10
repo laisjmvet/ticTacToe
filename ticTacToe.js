@@ -1,41 +1,45 @@
-//import prompt from "prompt-sync";
 const prompt = require('prompt-sync')({sigint: true})
+const colors = require("colors");
 
-const matrixNums = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+//elements that are going to be printed
+const matrixElems = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+//board to keep track of the win/loss
 const board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+//possibles idx that the computer can choose
 let possibleIdx = [[],[],[]];
 let gameOver = false;
 
+//to update the matrix elements, print the matrix and check if there is a winner at the same time
 const updatePrintCheck = () => {
-    updateMatrixNums(); 
+    updateMatrixElems(); 
     printMatrix();
     checkWinner(board);
 }
-
+//check if the game is a draw
 let gameDraw = () => {
-    const spotAvailable = matrixNums.some(elem => typeof elem === "number");
+    const spotAvailable = matrixElems.some(elem => typeof elem === "number");
 
     if(!spotAvailable) {
-        console.log("It is a draw!!");
+        console.log(colors.rainbow("It is a draw!!"));
         gameOver = true;
 
     }
 };
-
+//prints the matrix for the user
 const printMatrix = () => {    
-    let a=matrixNums[0];
-    let b=matrixNums[1];
-    let c=matrixNums[2];
-    let d=matrixNums[3];
-    let e=matrixNums[4];
-    let f=matrixNums[5];
-    let g=matrixNums[6];
-    let h=matrixNums[7];
-    let i=matrixNums[8];
+    let a=matrixElems[0];
+    let b=matrixElems[1];
+    let c=matrixElems[2];
+    let d=matrixElems[3];
+    let e=matrixElems[4];
+    let f=matrixElems[5];
+    let g=matrixElems[6];
+    let h=matrixElems[7];
+    let i=matrixElems[8];
     
     return console.log(`${a}|${b}|${c}\n-----\n${d}|${e}|${f}\n-----\n${g}|${h}|${i}\n`);
 }
-
+//check what are the possibles idx that the computer can choose and update possibleIdx variable
 const possibleChoices = () => {
 
     const board2 = [...board];
@@ -58,138 +62,138 @@ const possibleChoices = () => {
     }
     return false;
 }
-
+//pick a random array from possibleIdx
 const computerRandomArr = () => {
     const randomArr = Math.floor(Math.random() * possibleIdx.length);    
     
     return possibleIdx.indexOf(possibleIdx[randomArr]);   
       
 }
-
+//pick a random element from the random array
 const computerRandomArrElem = (computerRandomArr) => {    
     const randomElemArr = Math.floor(Math.random() * possibleIdx[computerRandomArr].length);
     
     return possibleIdx[computerRandomArr][randomElemArr];
 
 }    
-
+//checks if there is a winner or a draw
 const checkWinner = (board) => {
     if(board[0][0] + board[0][1] + board[0][2] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[1][0] + board[1][1] + board[1][2] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[2][0] + board[2][1] + board[2][2] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[0][0] + board[1][0] + board[2][0] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[0][1] + board[1][1] + board[2][1] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[0][2] + board[1][2] + board[2][2] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[0][0] + board[1][1] + board[2][2] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     }else if(board[0][2] + board[1][1] + board[2][0] == 3){
-        console.log("YOU WIN!");
+        console.log(colors.green("YOU WIN!"));
         gameOver = true;
         return "playerWins";
 
     } else if(board[0][0] + board[0][1] + board[0][2] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
 
     }else if(board[1][0] + board[1][1] + board[1][2] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
 
     }else if(board[2][0] + board[2][1] + board[2][2] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
 
     }else if(board[0][0] + board[1][0] + board[2][0] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
 
     }else if(board[0][1] + board[1][1] + board[2][1] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
 
     }else if(board[0][2] + board[1][2] + board[2][2] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";        
 
-    }else if(board[0][1] + board[1][1] + board[2][2] == -3){
-        console.log("LOSER!");
+    }else if(board[0][0] + board[1][1] + board[2][2] == -3){
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
 
     }else if(board[0][2] + board[1][1] + board[2][0] == -3){
-        console.log("LOSER!");
+        console.log(colors.yellow("LOSER!"));
         gameOver = true;
         return "computerWins";
     }    
     
     gameDraw();
 }
-
-const updateMatrixNums = () => {
+//updates matrix elements with X or O
+const updateMatrixElems = () => {
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++) {    
                     
             if(board[i][j] === 1) {                
 
                 if(i === 0){
-                    matrixNums[j] = "X";
+                    matrixElems[j] = colors.red("X");
 
                 }else if(i === 1){
-                    matrixNums[j + 3] = "X";
+                    matrixElems[j + 3] = colors.red("X");
 
                 }else {
-                    matrixNums[j + 6] = "X";
+                    matrixElems[j + 6] = colors.red("X");
                 }
                 
             }else if(board[i][j] === -1){
 
                 if(i === 0){
-                    matrixNums[j] = "O";
+                    matrixElems[j] = colors.blue("O");
 
                 }else if(i === 1){
-                    matrixNums[j + 3] = "O";
+                    matrixElems[j + 3] = colors.blue("O");
 
                 }else {
-                    matrixNums[j + 6] = "O";
+                    matrixElems[j + 6] = colors.blue("O");
                 }
             }
         }
     }
 }
-
+//logic for the computer move and update the board
 const computerTurn = () => {    
 
     if(gameOver) {
@@ -205,23 +209,23 @@ const computerTurn = () => {
     }
 
     // Try not lose the game
-    if(board[0][0] + board[0][1] + board[0][2] == -2 || board[0][0] + board[0][1] + board[0][2] == 2){
+    if(board[0][0] + board[0][1] + board[0][2] == 2){
         board[0][board[0].indexOf(0)] = -1;
 
             updatePrintCheck();
 
-    }else if(board[1][0] + board[1][1] + board[1][2] == -2 || board[1][0] + board[1][1] + board[1][2] == 2){
+    }else if(board[1][0] + board[1][1] + board[1][2] == 2){
         board[1][board[1].indexOf(0)] = -1;
 
             updatePrintCheck();
 
-    }else if(board[2][0] + board[2][1] + board[2][2] == -2 || board[2][0] + board[2][1] + board[2][2] == 2){
+    }else if(board[2][0] + board[2][1] + board[2][2] == 2){
         board[2][board[2].indexOf(0)] = -1;
 
             updatePrintCheck();
 
 
-    }else if(board[0][0] + board[1][0] + board[2][0] == -2 || board[0][0] + board[1][0] + board[2][0] == 2){
+    }else if(board[0][0] + board[1][0] + board[2][0] == 2){
 
         if(board[0][0] == 0){
             board[0][0] = -1;
@@ -240,7 +244,7 @@ const computerTurn = () => {
 
         }
 
-    }else if(board[0][1] + board[1][1] + board[2][1] == -2 || board[0][1] + board[1][1] + board[2][1] == 2){
+    }else if(board[0][1] + board[1][1] + board[2][1] == 2){
 
         if(board[0][1] == 0){
             board[0][1] = -1;
@@ -259,7 +263,7 @@ const computerTurn = () => {
 
         }
 
-    }else if(board[0][2] + board[1][2] + board[2][2] == -2 || board[0][2] + board[1][2] + board[2][2] == 2){
+    }else if(board[0][2] + board[1][2] + board[2][2] == 2){
 
         if(board[0][2] == 0){
             board[0][2] = -1;
@@ -278,7 +282,7 @@ const computerTurn = () => {
 
         }
 
-    }else if(board[0][2] + board[1][1] + board[2][0] == -2 || board[0][2] + board[1][1] + board[2][0] == 2){
+    }else if(board[0][2] + board[1][1] + board[2][0] == 2){
 
         if(board[0][2] == 0){
             board[0][2] = -1;
@@ -297,7 +301,7 @@ const computerTurn = () => {
 
         }
 
-    }else if(board[0][0] + board[1][1] + board[2][2] == -2 || board[0][0] + board[1][1] + board[2][2] == 2){
+    }else if(board[0][0] + board[1][1] + board[2][2] == 2){
 
         if(board[0][0] == 0){
             board[0][0] = -1;
@@ -315,6 +319,7 @@ const computerTurn = () => {
             updatePrintCheck();
 
         }
+    //if it can't win or lose, it will chose a spot randomly    
     } else {
         possibleChoices();
 
@@ -325,18 +330,18 @@ const computerTurn = () => {
         updatePrintCheck();
     }    
 }
-
+//prompt the player for his choice and update the board
 const playerTurn = () => {
 
-    let regex = /[0-8]/
+    let regex = /^[0-8]$/
     let input = prompt(`Your turn! Choose a number or CTRL + C to quit: `);          
 
     if(!regex.test(input.trim())) {
-        console.log(`Type a valid number`);
+        console.log(colors.red(`Type a valid number`));
         playerTurn();
 
-    }else if(matrixNums[input] === "X" || matrixNums[input] === "O") {
-        console.log("This spot is already filled, choose another one!");
+    }else if(typeof matrixElems[input] != "number") {
+        console.log(colors.red("This spot is already filled, choose another one!"));
         playerTurn();
         
 
@@ -386,13 +391,14 @@ const playerTurn = () => {
 
 const playGame = () => { 
     printMatrix(); 
+
     while(!gameOver){         
         
         playerTurn();        
         computerTurn();             
-            
     }
 }
+
 playGame();
 
 
